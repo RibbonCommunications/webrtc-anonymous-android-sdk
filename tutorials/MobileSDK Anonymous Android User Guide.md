@@ -5,13 +5,13 @@ Revision Date: **October 31, 2022**
 
 ## Anonymous Call Mobile SDK overview
 
-The SPiDR/Kandy Link Anonymous Call Mobile Software Development Kit (SDK) defines a library implementation supporting SPiDR/Kandy Link platform features like anonymous call management (allowing unregistered users to place voice or video calls) and WebRTC on Android. You can use this library implementation to integrate SPiDR/Kandy Link services and WebRTC into your native mobile applications to create new, innovative user experiences.
+The WebRTC GW Anonymous Call Mobile Software Development Kit (SDK) defines a library implementation supporting WebRTC GW platform features like anonymous call management (allowing unregistered users to place voice or video calls) and WebRTC on Android. You can use this library implementation to integrate WebRTC GW services and WebRTC into your native mobile applications to create new, innovative user experiences.
 
 The Anonymous Call Mobile SDK has the following characteristics:
 
-* Supports REST over HTTP/HTTPS for integration with the presentation layer of SPiDR/Kandy Link
+* Supports REST over HTTP/HTTPS for integration with the presentation layer of WebRTC GW
 * Supports WebSocket for notification
-* Access to REST APIs provided by Ribbon's Kandy platform
+* Access to REST APIs provided by Ribbon's WebRTC GW platform
 
 See [Appendix A: High-level Anonymous Call Mobile SDK structure](#appendix-a-high-level-anonymous-call-mobile-sdk-structure) for a high-level view of the Anonymous Call Mobile SDK and its sub-modules.
 
@@ -30,7 +30,7 @@ The following items need to be complete prior to beginning work on your applicat
 
 * Your Android Studio development environment is set up and ready for new projects.
 * You are familiar with Android development fundamentals.
-* You know the IP address and port of the SPiDR/Kandy Link server.
+* You know the IP address and port of the WebRTC GW server.
 
 <div class="page-break"></div>
 
@@ -79,7 +79,7 @@ allprojects {
     jcenter()
 
     maven {
-      url "https://raw.githubusercontent.com/Kandy-IO/kandy-anonymous-android-sdk/master/dist/"
+      url "https://raw.githubusercontent.com/RibbonCommunications/webrtc-anonymous-android-sdk/master/dist/"
     }
   }
 }
@@ -90,19 +90,19 @@ allprojects {
 2. Add dependency of Anonymous Call Mobile SDK to your app level **build.gradle** file.
 
 ```groovy
-implementation 'com.kandy.mobile:kandyanonymousmobilesdk:$SDK_VERSION$ '
+implementation 'com.ribbon.mobile:ribbonwebrtcanonymoussdk:$SDK_VERSION$ '
 ```
 
 ![alt text](images/get_started_5.png "")
 
 <hr/>
 <h5>NOTE</h5>
-Check latest version of Anonymous Call Mobile SDK from <a href="https://github.com/Kandy-IO/kandy-anonymous-android-sdk">GitHub</a>.
+Check latest version of Anonymous Call Mobile SDK from <a href="https://github.com/RibbonCommunications/webrtc-anonymous-android-sdk">GitHub</a>.
 <hr/>
 
 #### Adding the dependency manually
 
-1. Download latest Anonymous Call Mobile SDK version from [GitHub](https://github.com/Kandy-IO/kandy-anonymous-android-sdk/tree/$SDK_VERSION$/dist/com/kandy/mobile/kandyanonymousmobilesdk/$SDK_VERSION$) and copy **aar** file to your project **lib** folder.
+1. Download latest Anonymous Call Mobile SDK version from [GitHub](https://github.com/RibbonCommunications/webrtc-anonymous-android-sdk/tree/$SDK_VERSION$/dist/com/ribbon/mobile/ribbonwebrtcanonymoussdk/$SDK_VERSION$) and copy **aar** file to your project **lib** folder.
 
 ![alt text](images/get_started_6.png "")
 
@@ -119,7 +119,7 @@ flatDir {
 3. Add dependency of Anonymous Call Mobile SDK to your app level **build.gradle** file with **@aar** prefix.
 
 ```groovy
-implementation 'com.kandy.mobile:kandyanonymousmobilesdk:$SDK_VERSION$@aar'
+implementation 'com.ribbon.mobile:ribbonwebrtcanonymoussdk:$SDK_VERSION$@aar'
 ```
 
 ![alt text](images/get_started_8.png "")
@@ -594,9 +594,9 @@ public class Demo {
 
         //set minimum Configuration values
 
-        //server IP value for SPiDR/Kandy Link
+        //server IP value for WebRTC GW
         configuration.setRestServerIp("$SUBSCRIPTIONFQDN$");
-        //server port value for SPiDR/Kandy Link
+        //server port value for WebRTC GW
         configuration.setRestServerPort(443);
 
          //IP used in websocket connection creation
@@ -604,7 +604,7 @@ public class Demo {
         //port used in websocket connection creation
         configuration.setWebSocketServerPort(443);
 
-        // SPiDR/Kandy Link TURN server using udp transport in WebRTC's peer connection
+        // WebRTC GW TURN server using udp transport in WebRTC's peer connection
         ICEServers iceServers = new ICEServers();
         iceServers.addICEServer("$TURNSERVER1$");
         iceServers.addICEServer("$TURNSERVER2$");
@@ -636,7 +636,7 @@ class Demo {
         //port used in websocket connection creation
         configuration.webSocketServerPort = 443;
 
-        // SPiDR/Kandy Link TURN server using udp transport in WebRTC's peer connection
+        // WebRTC GW TURN server using udp transport in WebRTC's peer connection
         val iceServers = ICEServers()
         iceServers.addICEServer("$TURNSERVER1$")
         iceServers.addICEServer("$TURNSERVER2$")
@@ -755,9 +755,9 @@ public class LogHelper {
     public static void saveLog() {
         if (isExternalStorageWritable()) {
 
-            File appDirectory = new File(Environment.getExternalStorageDirectory() + "/KandyLinkDemoApp");
+            File appDirectory = new File(Environment.getExternalStorageDirectory() + "/WebRTCSDKDemoApp");
             File logDirectory = new File(appDirectory + "/log");
-            LogHelper.logFile = new File(logDirectory, "KandyLinkAndroidLogs" + ".txt");
+            LogHelper.logFile = new File(logDirectory, "WebRTCSDKAndroidLogs" + ".txt");
 
             // create app folder
             if (!appDirectory.exists()) {
@@ -808,9 +808,9 @@ object LogHelper {
         when {
             isExternalStorageWritable -> {
                 val appDirectory =
-                    File(Environment.getExternalStorageDirectory().toString() + "/KandyLinkDemoApp")
+                    File(Environment.getExternalStorageDirectory().toString() + "/WebRTCSDKDemoApp")
                 val logDirectory = File("$appDirectory/log")
-                logFile = File(logDirectory, "KandyLinkAndroidLogs" + ".txt")
+                logFile = File(logDirectory, "WebRTCSDKAndroidLogs" + ".txt")
 
                 // create app folder
                 if (!appDirectory.exists()) {
@@ -900,15 +900,15 @@ class CallActivity : AppCompatActivity(), RegistrationApplicationListener, CallA
 
 ### Adding STUN/TURN servers
 
-SPiDR/Kandy Link provides TURN server support for media relay between two WebRTC endpoints in core version 3.0 and later. The ICEServers property in the Configuration class is used to store the ICE servers list; more than one ICEServer can exist in this property.
+WebRTC GW provides TURN server support for media relay between two WebRTC endpoints in core version 3.0 and later. The ICEServers property in the Configuration class is used to store the ICE servers list; more than one ICEServer can exist in this property.
 
-#### Adding SPiDR's (Kandy Link) TURN server
+#### Adding WebRTC GW TURN server
 
-After registration, the Mobile SDK gets default credentials from SPiDR/Kandy Link for the TURN servers and updates the defaultICEUsername and defaultICEPassword configuration properties. The list of ICEServers and their credentials are added to the PeerConnection when creating a call.
+After registration, the Mobile SDK gets default credentials from WebRTC GW for the TURN servers and updates the defaultICEUsername and defaultICEPassword configuration properties. The list of ICEServers and their credentials are added to the PeerConnection when creating a call.
 
-The following code sample will request TURN server credentials from SPiDR/Kandy Link and update the configuration instance.
+The following code sample will request TURN server credentials from WebRTC GW and update the configuration instance.
 
-**Note:** If your SPiDR/Kandy Link core version does not have TURN Server support, adding a TURN server without a username and password will cause the registration request to fail.
+**Note:** If your WebRTC GW core version does not have TURN Server support, adding a TURN server without a username and password will cause the registration request to fail.
 
 ###### Example: Adding STUN/TURN server
 
@@ -940,7 +940,7 @@ Configuration.getInstance().iceServers = iceServers
 
 #### Adding an external TURN/STUN server
 
-You also have the option of using external TURN/STUN servers while establishing calls rather than SPiDR's (Kandy Link) TURN server(s). The ICEServers property will store the address and username/password for the server(s).
+You also have the option of using external TURN/STUN servers while establishing calls rather than WebRTC GW TURN server(s). The ICEServers property will store the address and username/password for the server(s).
 
 Use the addICEServer:username:password: method of the ICEServers object to define credentials.
 
@@ -1408,8 +1408,8 @@ override fun endCallFailed(call: CallInterface?, error: MobileError?) {
 
 ### End calls with reason
 
-Applications can use the `endCall` API to send the end call reason to SPiDR/Kandy Link, then SPiDR/Kandy Link will send message with the reason to the remote user. The remote user gets the reason using the `callStatusChanged` API.
-If the call end reason string length exceeds the character limitation defined in SPiDR/Kandy Link Core, then SPiDR/Kandy Link Core will not send the excess characters.
+Applications can use the `endCall` API to send the end call reason to WebRTC GW, then WebRTC GW will send message with the reason to the remote user. The remote user gets the reason using the `callStatusChanged` API.
+If the call end reason string length exceeds the character limitation defined in WebRTC GW Core, then WebRTC GW Core will not send the excess characters.
 
 ###### Example: End call with reason
 
@@ -1456,7 +1456,7 @@ override fun callStatusChanged(callInterface: CallInterface, callState: CallStat
 
 ### Supported call end reasons
 
-When an endCall notification is received from SPiDR/Kandy Link, the Anonymous Call SDK forwards the status code (statusCode) and status reason (reason) to the application layer, informing the user why the call has ended.
+When an endCall notification is received from WebRTC GW, the Anonymous Call SDK forwards the status code (statusCode) and status reason (reason) to the application layer, informing the user why the call has ended.
 
 Anonymous Call SDK-specific status codes and reasons sent to the application layer include:
 
@@ -2120,7 +2120,7 @@ fun changeVideoResolutionAndPosition () {
 
 ### Send DTMF (Dual-Tone Multi-Frequency) signals
 
-The Anonymous Call Mobile SDK supports sending Dual-Tone Multi-Frequency (DTMF) signals to an Interactive Voice Response (IVR) system via the SPiDR/Kandy Link Media Broker. This allows callers to enter passcodes on active or ringing calls. Available keys for tones include 0-9, *, #, A, B, C, and D, as outlined in RFC 4733. When remote party does't suport out-of-band DTMF, the API method will return false.
+The Anonymous Call Mobile SDK supports sending Dual-Tone Multi-Frequency (DTMF) signals to an Interactive Voice Response (IVR) system via the WebRTC GW Media Broker. This allows callers to enter passcodes on active or ringing calls. Available keys for tones include 0-9, *, #, A, B, C, and D, as outlined in RFC 4733. When remote party does't suport out-of-band DTMF, the API method will return false.
 
 **Note:** This feature only provides the functionality for sending DTMF signals. It does not include the functionality for getting keypad input or for playing key press volume.
 
@@ -3295,9 +3295,9 @@ public class CallStatisticsHelper {
     private static ArrayList<StatisticsModel> callStatistics = new ArrayList<>();
 
     public static void clearFile() {
-        //clear the KandyLinkAndroidCallStatistics.txt first
+        //clear the WebRTCSDKAndroidCallStatistics.txt first
         File externalFilesDir = BasicSDKDemo.appContext.getExternalFilesDir(null);
-        callStatisticsFile = new File(externalFilesDir, "KandyLinkSDKAndroidCallStatistics" + ".txt");
+        callStatisticsFile = new File(externalFilesDir, "WebRTCSDKAndroidCallStatistics" + ".txt");
 
         PrintWriter writer;
         try {
@@ -3349,7 +3349,7 @@ public class CallStatisticsHelper {
         if (isExternalStorageWritable()) {
 
             File externalFilesDir = BasicSDKDemo.appContext.getExternalFilesDir(null);
-            callStatisticsFile = new File(externalFilesDir, "KandyLinkSDKAndroidCallStatistics" + ".txt");
+            callStatisticsFile = new File(externalFilesDir, "WebRTCSDKAndroidCallStatistics" + ".txt");
 
             if (!callStatisticsFile.exists()) {
                 try {
@@ -3413,10 +3413,10 @@ object CallStatisticsHelper {
         private set
 
     fun clearFile() {
-        //clear the KandyLinkAndroidCallStatistics.txt first
+        //clear the WebRTCSDKAndroidCallStatistics.txt first
         val appDirectory = File(Environment.getExternalStorageDirectory().toString() + "/BasicSDKDemoApp")
         val statisticsDirectory = File("$appDirectory/statistics")
-        val statisticsFile = File(statisticsDirectory, "KandyLinkAnonymousSDKAndroidCallStatistics" + ".txt")
+        val statisticsFile = File(statisticsDirectory, "WebRTCSDKAndroidCallStatistics" + ".txt")
         val writer: PrintWriter
         try {
             writer = PrintWriter(statisticsFile)
@@ -3433,7 +3433,7 @@ object CallStatisticsHelper {
             isExternalStorageWritable -> {
                 val appDirectory = File(Environment.getExternalStorageDirectory().toString() + "/BasicSDKDemoApp")
                 val statisticsDirectory = File("$appDirectory/statistics")
-                callStatisticsFile = File(statisticsDirectory, "KandyLinkAnonymousSDKAndroidCallStatistics" + ".txt")
+                callStatisticsFile = File(statisticsDirectory, "WebRTCSDKAndroidCallStatistics" + ".txt")
 
                 //create app folder
                 if (!appDirectory.exists()) {
@@ -3648,7 +3648,7 @@ public class Demo {
         //port used in websocket connection creation
         configuration.setWebSocketServerPort(443);
 
-        // SPiDR/Kandy Link TURN server in WebRTC's peer connection
+        // WebRTC GW TURN server in WebRTC's peer connection
         ICEServers iceServers = new ICEServers();
         iceServers.addICEServer("$TURNSERVER1$");
         iceServers.addICEServer("$TURNSERVER2$");
@@ -3702,7 +3702,7 @@ class Demo {
         //set to WS or WSS protocol
         configuration.securedWSProtocol = true;
 
-        // SPiDR/Kandy Link TURN server in WebRTC's peer connection
+        // WebRTC GW TURN server in WebRTC's peer connection
         val iceServers = ICEServers()
         iceServers.addICEServer("$TURNSERVER1$")
         iceServers.addICEServer("$TURNSERVER2$")
