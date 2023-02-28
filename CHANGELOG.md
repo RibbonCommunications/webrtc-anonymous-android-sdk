@@ -6,17 +6,17 @@ Ribbon WebRTC Anonymous Android SDK change log.
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
 
 ## 6.11.0 - 2023-28-02
-
+No update
 ## 6.10.0 - 2023-24-01
-
+No update
 ## 6.9.0 - 2022-26-12
-
+No update
 ## 6.8.0 - 2022-31-10
-
+No update
 ## 6.7.0 - 2022-3-10
-
+No update
 ## 6.6.0 - 2022-31-08
-
+No update
 ### Added 
 - Video mute/unMute API. `KAE-1338`
 
