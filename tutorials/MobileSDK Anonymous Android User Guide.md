@@ -259,9 +259,7 @@ public void configExample() {
 
     ICEServers iceServers = new ICEServers();
     iceServers.addICEServer("$TURNSERVER1$");
-    iceServers.addICEServer("$TURNSERVER2$");
     iceServers.addICEServer("$STUNSERVER1$");
-    iceServers.addICEServer("$STUNSERVER2$");
     configuration.setICEServers(iceServers);
 
     configuration.setWebSocketServerIp("$WEBSOCKETFQDN$");
@@ -279,9 +277,7 @@ fun configExample(){
 
         val iceServers = ICEServers()
         iceServers.addICEServer("$TURNSERVER1$")
-        iceServers.addICEServer("$TURNSERVER2$")
         iceServers.addICEServer("STUNSERVER1$")
-        iceServers.addICEServer("STUNSERVER2$")
         configuration.iceServers = iceServers
 
         configuration.webSocketServerIp = "$WEBSOCKETFQDN$"
@@ -607,9 +603,7 @@ public class Demo {
         // WebRTC GW TURN server using udp transport in WebRTC's peer connection
         ICEServers iceServers = new ICEServers();
         iceServers.addICEServer("$TURNSERVER1$");
-        iceServers.addICEServer("$TURNSERVER2$");
         iceServers.addICEServer("$STUNSERVER1$");
-        iceServers.addICEServer("$STUNSERVER2$");
         configuration.setICEServers(iceServers);
     }
 }
@@ -626,9 +620,9 @@ class Demo {
 
         //set minimum Configuration values
         
-        //server IP value for SPiDR
+        //server IP value for Ribbon WebRTC Gateway 
         configuration.restServerIp = "$SUBSCRIPTIONFQDN$"
-        //server port value for SPiDR
+        //server port value for Ribbon WebRTC Gateway 
         configuration.restServerPort = 443
         
         //IP used in websocket connection creation
@@ -639,9 +633,7 @@ class Demo {
         // WebRTC GW TURN server using udp transport in WebRTC's peer connection
         val iceServers = ICEServers()
         iceServers.addICEServer("$TURNSERVER1$")
-        iceServers.addICEServer("$TURNSERVER2$")
         iceServers.addICEServer("$STUNSERVER1$")
-        iceServers.addICEServer("$STUNSERVER2$")
         configuration.iceServers = iceServers
         }
 }
@@ -920,8 +912,6 @@ The following code sample will request TURN server credentials from WebRTC GW an
 ICEServers servers = new ICEServers();
 servers.addICEServer("$TURNSERVER1$");
 servers.addICEServer("$STUNSERVER1$");
-servers.addICEServer("$TURNSERVER2$");
-servers.addICEServer("$STUNSERVER2$");
 
 Configuration.getInstance().setICEServers(servers);
 ```
@@ -931,9 +921,7 @@ Configuration.getInstance().setICEServers(servers);
 ```kotlin
 val iceServers = ICEServers()
 iceServers.addICEServer("$TURNSERVER1$")
-iceServers.addICEServer("$TURNSERVER2$")
 iceServers.addICEServer("$STUNSERVER1$")
-iceServers.addICEServer("$STUNSERVER2$")
 Configuration.getInstance().iceServers = iceServers
 ```
 <!-- tabs:end -->
@@ -980,8 +968,6 @@ servers.addICEServer("$STUNSERVER1$")
 ```java
 ICEServers servers = Configuration.getInstance().getICEServers();
 servers.addICEServer("$TURNSERVER1$", "username", "password");
-servers.addICEServer("$TURNSERVER2$", "username", "password");
-servers.addICEServer("$TURNSERVER2$", "username", "password");
 ```
 
 #### ** Kotlin Code **
@@ -989,8 +975,6 @@ servers.addICEServer("$TURNSERVER2$", "username", "password");
 ```kotlin
 val servers = Configuration.getInstance().iceServers
 servers.addICEServer("$TURNSERVER1$", "username", "password")
-servers.addICEServer("$TURNSERVER2$", "username", "password")
-servers.addICEServer("$TURNSERVER2$", "username", "password")
 ```
 <!-- tabs:end -->
 
@@ -1244,9 +1228,9 @@ fun anonymousCallExample(){
 
 ### Make a time-limited token based anonymous call
 
-Use the Time-Limited Token Based Anonymous Call functionality to place audio only or audio/video calls anonymously (without logging in with a username and password). A pre-shared (provisioned) key is used to obfuscate the time in the token - once handed out, SPiDR/KL will only allow the token to be used to access/subscribe to the services for a limited time (i.e. within 10 minutes of UTC time in token). This helps anonymous call functionality to be more secure.
+Use the Time-Limited Token Based Anonymous Call functionality to place audio only or audio/video calls anonymously (without logging in with a username and password). A pre-shared (provisioned) key is used to obfuscate the time in the token - once handed out, Ribbon WebRTC Gateway  will only allow the token to be used to access/subscribe to the services for a limited time (i.e. within 10 minutes of UTC time in token). This helps anonymous call functionality to be more secure.
 
-Application developer will be responsible for token generation. Token can be generated using the "Security Key" defined in SPiDR/KL and must be supplied to the SDK to start a call.
+Application developer will be responsible for token generation. Token can be generated using the "Security Key" defined in Ribbon WebRTC Gateway and must be supplied to the SDK to start a call.
 
 ###### Example: Establishing a time-limited token based anonymous call
 
@@ -1258,12 +1242,12 @@ Application developer will be responsible for token generation. Token can be gen
 public void anonymousCallExample() {
 
     // Following tokens should be generated by the app developer
-    // by using the security key defined in the SPiDR/KL Admin GUI
+    // by using the security key defined in the Ribbon WebRTC Gateway Admin GUI
     String accountToken;
     String originatorToken;
     String terminatorToken;
 
-    String tokenRealm;  // use the token realm defined in the SPiDR/KL Admin GUI
+    String tokenRealm;  // use the token realm defined in the Ribbon WebRTC Gateway Admin GUI
 
     //initialize related video UI views for local and remote video display
     VideoView localVideoView  = (VideoView)findViewById(R.id.localVideoView);
@@ -1311,12 +1295,12 @@ public void establishCallFailed(OutgoingCallInterface outgoingCall, MobileError 
 ```kotlin
 fun anonymousCallExample(){
         // Following tokens should be generated by the app developer
-        // by using the security key defined in the SPiDR/KL Admin GUI
+        // by using the security key defined in the Ribbon WebRTC Gateway  Admin GUI
         val accountToken
         val originatorToken
         val terminatorToken
 
-        val tokenRealm  // use the token realm defined in the SPiDR/KL Admin GUI
+        val tokenRealm  // use the token realm defined in the Ribbon WebRTC Gateway Admin GUI
 
         //initialize related video UI views for local and remote video display
         val localVideoView = findViewById<VideoView>(R.id.localVideoView)
@@ -3634,9 +3618,9 @@ public class Demo {
 
         Configuration configuration = Configuration.getInstance();
 
-        //server IP value for SPiDR
+        //server IP value for Ribbon WebRTC Gateway 
         configuration.setRestServerIp("$SUBSCRIPTIONFQDN$");
-        //server port value for SPiDR
+        //server port value for Ribbon WebRTC Gateway 
         configuration.setRestServerPort(443);
         //logger implementation defined by the application
         configuration.setLogger(new DefaultLogUtility());
@@ -3651,9 +3635,7 @@ public class Demo {
         // WebRTC GW TURN server in WebRTC's peer connection
         ICEServers iceServers = new ICEServers();
         iceServers.addICEServer("$TURNSERVER1$");
-        iceServers.addICEServer("$TURNSERVER2$");
         iceServers.addICEServer("$STUNSERVER1$");
-        iceServers.addICEServer("$STUNSERVER2$");
 
         configuration.setICEServers(iceServers);
 
@@ -3661,7 +3643,7 @@ public class Demo {
         configuration.setICECollectionTimeout(4);
 
         //Set supported call features (ringing feedback)
-        //SPiDR server must support this feature
+        //Ribbon WebRTC Gateway server must support this feature
         configuration.setRingingFeedbackOption(CLIENT);
 
         //Set one of the ice candidate negotiation types (ICE_VANILLA or ICE_TRICKLE)
@@ -3684,9 +3666,9 @@ class Demo {
         
         val configuration = Configuration.getInstance()
 
-        //server IP value for SPiDR
+        //server IP value for Ribbon WebRTC Gateway 
         configuration.restServerIp = "$SUBSCRIPTIONFQDN$"
-        //server port value for SPiDR
+        //server port value for Ribbon WebRTC Gateway 
         configuration.restServerPort = 443
         //logger implementation defined by the application
         configuration.logger = DefaultLogUtility()
@@ -3705,9 +3687,7 @@ class Demo {
         // WebRTC GW TURN server in WebRTC's peer connection
         val iceServers = ICEServers()
         iceServers.addICEServer("$TURNSERVER1$")
-        iceServers.addICEServer("$TURNSERVER2$")
         iceServers.addICEServer("$STUNSERVER1$")
-        iceServers.addICEServer("$STUNSERVER2$")
         configuration.iceServers = iceServers
         
 
@@ -3715,7 +3695,7 @@ class Demo {
         configuration.iceCollectionTimeout = 4
 
         //Set supported call features (ringing feedback)
-        //SPiDR server must support this feature
+        //Ribbon WebRTC Gateway server must support this feature
         configuration.setRingingFeedbackOption = CLIENT;
         
         //Set one of the ice candidate negotiation types (ICE_VANILLA or ICE_TRICKLE)
