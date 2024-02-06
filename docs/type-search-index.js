@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"com.genband.mobile","l":"AnonymousServiceProvider"},{"p":"com.genband.mobile.api","l":"AnonymousServiceProviderInterface"}];updateSearchResults();
