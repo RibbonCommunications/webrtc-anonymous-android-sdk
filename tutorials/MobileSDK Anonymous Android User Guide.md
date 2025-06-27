@@ -1,7 +1,7 @@
 # Anonymous Call Mobile SDK User Guide for Android
 Version Number: **$SDK_VERSION$**
 <br>
-Revision Date: **Apr 30, 2025**
+Revision Date: **Jun 27, 2025**
 
 ## Anonymous Call Mobile SDK overview
 
@@ -2328,9 +2328,19 @@ startForeground(ONGOING_NOTIFICATION_ID, notification)
 
 ## Advanced Usage
 
-### Send Custom Parameters for an anonymous call
+### Custom Parameters
 
-If desired, custom SIP Headers can be send while initiating call and/or during the mid-call events. Parameters should contain key-value pairs that are provisioned by the backend.
+Custom SIP headers can be used to convey additional information to a SIP endpoint.
+
+Any SIP header can be used as a custom parameter, such as X-Headers or proprietary headers. However, if the defined header name conflicts with another SIP header name in the SIP message, the existing SIP header will be removed and the application's custom SIP header will be added to the message.
+
+These parameters must be configured on the WebRTC Gateway prior to making a REST request, otherwise the request will fail when trying to include the parameters. The WebRTC Gateway does not impose limitations on the length of a header. See the Gateway documentation for more information.
+
+These parameters can be provided during call establishment. They can also be set on the call after it is established using the `setCustomParameters` method, then sent using the `sendCustomParameters` method.
+
+Custom parameters may be received anytime throughout the duration a call. A remote endpoint may send custom headers when starting a call, answering a call, or during call updates such as hold/unhold and addition/removal of media in the call. When these custom headers are received, the SDK will emit appropriate callbacks which will contain the custom parameters that were received.
+
+Custom parameters set on a call are stored on the CallObject. These are the parameters that will be sent to the remote endpoint of the call. Parameters received from a call are not stored as part of the CallObject, and are only provided via the callbacks.
 
 ###### Example: Sending Custom Parameters while establishing call
 
@@ -2339,12 +2349,17 @@ If desired, custom SIP Headers can be send while initiating call and/or during t
 #### ** Java Code **
 
 ```java
-public void callWithCustomHeadersExample(String terminatorAddress, boolean videoEnabled, Map<String, String> customParameters) {
+public void callWithCustomHeadersExample(String terminatorAddress, boolean videoEnabled) {
+    Map<String, String> headers = new HashMap<>();
+    headers.put("X-GPS", "51.759028,-1.213278");
+    headers.put("X-Caller-ID", "Coombs,Ernie");
+    headers.put("User-to-User", "48656c6c6f2c20576f726c6421;encoding=hex");
+
     callService.createOutgoingCall(terminatorAddress, new OutgoingCallCreateInterface()
     {
         @Override
         public void callCreated(OutgoingCallInterface callInterface) {
-            callInterface.establishCall(videoEnabled, customParameters);
+            callInterface.establishCall(videoEnabled, headers);
         }
         @Override
         public void callCreationFailed(MobileError error) {
@@ -2356,10 +2371,16 @@ public void callWithCustomHeadersExample(String terminatorAddress, boolean video
 #### ** Kotlin Code **
 
 ```kotlin
-fun callWithCustomHeadersExample(terminatorAddress: String?, videoEnabled: Boolean, customParameters: Map<String?, String?>?) {
+fun callWithCustomHeadersExample(terminatorAddress: String?, videoEnabled: Boolean) {
+        val headers = mapOf(
+            "X-GPS" to "51.759028,-1.213278",
+            "X-Caller-ID" to "Coombs,Ernie",
+            "User-to-User" to "48656c6c6f2c20576f726c6421;encoding=hex"
+        )
+
         callService.createOutgoingCall(terminatorAddress, object : OutgoingCallCreateInterface {
             override fun callCreated(callInterface: OutgoingCallInterface?) {
-                callInterface?.establishCall(videoEnabled, customParameters)
+                callInterface?.establishCall(videoEnabled, headers)
             }
 
             override fun callCreationFailed(error: MobileError?) {}
