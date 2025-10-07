@@ -4,6 +4,9 @@ Ribbon WebRTC Anonymous Android SDK change log.
 
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
+
+## 6.38.0 - 2025-02-10
+
 ## 6.37.0 - 2025-29-08
 ### Added
 - TURN/STUN Address Management in Demo App
@@ -305,4 +308,4 @@ Ribbon WebRTC Anonymous Android SDK change log.
 - Time-Limited Token Based Anonymous Call feature implemented `KAE-284`
 
 ### Changed
-- Package name for VideoView is changed to "com.genband.mobile.core.webrtc.view". `KAE-368`
+- Package name for VideoView is changed to "com.rbbn.mobile.core.webrtc.view". `KAE-368`
