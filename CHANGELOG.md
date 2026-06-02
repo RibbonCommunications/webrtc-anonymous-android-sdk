@@ -4,6 +4,19 @@ Ribbon WebRTC Anonymous Android SDK change log.
 
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
+## 6.44.0 - 2026-06-02
+
+### Added
+- Android 16 compatibility validation coverage for MobileSDK and BasicSDKDemo `KAE-1647`
+
+### Fixed
+- Snapshot crash during camera capture by correcting WebRTC video frame buffer handling `KAE-1647`
+- BasicSDKDemo login permission prerequisite by removing legacy external storage permission checks `KAE-1647`
+- BasicSDKDemo edge-to-edge/status bar inset handling for Android 16 target SDK validation `KAE-1647`
+- BasicSDKDemo notification and push registration robustness for Android 16 validation `KAE-1647`
+- Incoming call forward-to-PSTN address normalization to align Android behavior with iOS `KAE-1649`
+- BasicSDKDemo transfer UI cleanup after transfer success and remote ENDED call state `KAE-1285`
+
 ## 6.43.0 - 2026-31-03
 
 ## 6.42.0 - 2026-27-02
