@@ -4,6 +4,11 @@ Ribbon WebRTC Anonymous Android SDK change log.
 
 - This project adheres to [Semantic Versioning](http://semver.org/).
 - This change log follows [keepachangelog.com](http://keepachangelog.com/) recommendations.
+
+## 6.45.0 - 2026-24-09
+### Fixed
+- Dead silence with early in-dialog SDP offer `KAE-1668`
+
 ## 6.44.0 - 2026-06-02
 
 ### Added
